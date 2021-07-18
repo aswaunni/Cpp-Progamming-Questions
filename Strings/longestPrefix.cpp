@@ -11,9 +11,9 @@ string commonPrefixUtil(string str1, string str2)
 	int n1 = str1.length(), n2 = str2.length();
 
 	// Compare str1 and str2
-	for (int i=0, j=0; i<=n1-1&&j<=n2-1; i++,j++)
+	for (int i=0; i < n1 && i < n2; i++)
 	{
-		if (str1[i] != str2[j])
+		if (str1[i] != str2[i])
 			break;
 		result.push_back(str1[i]);
 	}
