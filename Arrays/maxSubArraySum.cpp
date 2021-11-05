@@ -51,4 +51,17 @@ int main() {
 	return 0;
 }
 
+//OR
+
+long long maxSubarraySum(int arr[], int n){
+        int maxHere = arr[0];
+        int ans = arr[0];
+        
+        for (int i = 1; i < n; i++) {
+            maxHere = max(maxHere+arr[i], arr[i]);
+            ans = max(ans, maxHere);
+        }
+	
+        return ans;
+}
 
