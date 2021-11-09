@@ -43,3 +43,19 @@ int main() {
 
 	return 0;
 }
+
+//OR
+
+string printLargest(vector<string> &arr) {
+    string s;
+    
+    sort(arr.begin(), arr.end(), [] (string s1, string s2) 
+    {
+        return ((s1+s2) > (s2+s1));
+    });
+    
+    for (int i = 0; i < arr.size(); i++)
+        s += arr[i];
+        
+    return s;
+}
