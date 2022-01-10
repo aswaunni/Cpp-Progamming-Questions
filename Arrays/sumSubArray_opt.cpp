@@ -10,7 +10,7 @@ int main() {
 	int sum = 23;
 	int start = 0;
 	int maxSum = 0;
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i <= n; i++) {
 		while (maxSum > sum && start < i-1)
 			maxSum -= arr[start++];
 
@@ -18,7 +18,7 @@ int main() {
 			cout << start << " " << i-1;
 			break;
 		} 
-		if (maxSum < sum)
+		if (i < n)
 			maxSum += arr[i];
 	}
 
