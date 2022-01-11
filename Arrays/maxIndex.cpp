@@ -62,3 +62,24 @@ int maxIndexDiff(int a[], int n)
     }
     return ans;
 }
+
+//OR
+
+int maxIndexDiff(int A[], int N) 
+{ 
+    vector<int> rMax(N);
+    rMax[N-1] = A[N-1];
+    for (int i = N-2; i >=0 ; i--) 
+        rMax[i] = max(rMax[i+1], A[i]);
+    
+    int ans = INT_MIN;
+    int i = 0, j = 0;
+    while (i < N && j < N) {
+        if (rMax[j] >= A[i]) {
+            ans = max(ans, j-i);
+            j++;
+        } else
+            i++;
+    }
+    return ans;
+}
