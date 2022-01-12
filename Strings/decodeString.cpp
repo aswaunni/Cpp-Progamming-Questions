@@ -11,31 +11,16 @@ You can assume that the messages are decodable. For example, '001' is not allowe
 using namespace std;
 
 //Method 1
-int recur(string in, int n) {
+int recur(string s, int i, int n) {
 	int result;
-	if (n == 0) {
-		cout << "\n";
+	if (n == i) {
 		return 1;
 	}
 
-	int start = in.length() - n;
-	result = recur(in, n-1);
-	if (stoi(in.substr(start, 2)) <= 26 && n >= 2) {
-		result += recur(in, n-2);
-	}
-	return result;
-}
-
-//Method 2
-int recur(string in, int start, int n) {
-	int result;
-	if (n == start) {
-		return 1;
-	}
-
-	result = recur(in, start+1, n);
-	if (stoi(in.substr(start, 2)) <= 26 && (n-start) >= 2)
-		result += recur(in, start+2, n);
+	if (s[i] != '0')
+		result += recur(s, i+1, n);
+	if ((i+1) < n && (s[i] == '1' || s[i] == '2' && s[i+1] < '7'))
+		result += recur(s, i+2, n);
 
 	return result;
 }
