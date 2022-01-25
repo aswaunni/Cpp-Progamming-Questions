@@ -16,66 +16,27 @@ resultant linked list is 4->2->2->1->8->7->6->5.
  we have used a stack which will store the nodes of the given linked list. Firstly, push the k elements of the linked list in the stack. Now pop elements one by one and keep track of the previously popped node. Point the next pointer of prev node to top element of stack. Repeat this process, until NULL is reached.
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-
-struct node {
-	node* next;
-	int data;
-	node(int d) 
-	{
-		data = d;
-		next = NULL;
-	}
-};
-
-struct linkedList {
-	node* head;
-
-	linkedList()
-	{
-		head = NULL;
-	}
-
-	void push(int d)
-	{
-		node* n = new node(d);
-		n->data = d;
-		n->next = head;
-		head = n;
-	}
-
-	void print()
-	{
-		node* n = head;
-		while(n != NULL) {
-			cout << n->data << " ";
-			n = n->next;
-		}
-		cout << "\n";
-	}
-
-	void middle()
-	{
-		node* one = head, *two = head;
-		while(two && two->next) {
-			one = one->next;
-			two = two->next->next;
-		}
-		cout << two->data << "\n";
-	}
-};
-
-void print(node* n)
-{
-	while(n != NULL) {
-		cout << n->data << " ";
-		n = n->next;
-	}
-	cout << "\n";
+node *reverse (struct node *head, int k)
+{ 
+    node* prev = NULL;
+    node* next;
+    node* curr = head;
+    int i = 0;
+    while (i < k && curr) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        i++;
+    }
+    if (curr)
+        head->next = reverse(curr, k);
+    return prev;
 }
 
-node* groupReverse(node* head, int k)  
+//OR
+
+node* reverse(node* head, int k)  
 {   
 	node* cur = head, *prev = NULL;
 	stack<node*> s;
@@ -105,24 +66,3 @@ node* groupReverse(node* head, int k)
 
 	return head;
 }
-
-int main() {
-	linkedList ll;
-	l1.push(8);
-	l1.push(7);
-	l1.push(6);
-	l1.push(5);
-	l1.push(4);
-	l1.push(2);
-	l1.push(2);
-	l1.push(1);
-	l1.print();
-
-
-	node* n = groupReverse(l1.head, 4);
-	print(n);
-
-	return 0;
-}
-
-
