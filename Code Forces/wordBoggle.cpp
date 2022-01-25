@@ -71,15 +71,15 @@ Each word can consist of both lowercase and uppercase letters.
 	    for (auto& word : dictionary) {
 	        bool flag = false;
 	        std::vector<std::vector<bool>> visited(m, std::vector<bool>(n, false));
-            for (int i = 0; i < m && !flag; i++) {
-                for ( int j = 0; j < n; j++) {
+            	for (int i = 0; i < m && !flag; i++) {
+                    for ( int j = 0; j < n; j++) {
 	                if (word[0] == board[i][j] && solve (word, 0, board, i, j, m, n, visited)) {
                         ans.push_back(word);
                         flag = true;
                         break;
 	                }
+                    }
                 }
-            }
 	    }
 	    return ans;
 	}
