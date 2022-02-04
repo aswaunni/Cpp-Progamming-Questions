@@ -19,6 +19,19 @@ stock on day 4 and sell it on day 6.
 Answer: Valley Peak approach
 */
 
+int maxProfit(vector<int>& prices) {
+    int n = prices.size();
+    int mn = INT_MAX;
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        mn = min(mn, prices[i]);
+        ans = max(ans, prices[i] - mn);
+    }
+    return ans;
+}
+
+//OR
+
 vector<vector<int> > stockBuySell(vector<int> A, int n)
 {
     vector<vector<int>> ans;
