@@ -27,25 +27,16 @@ Output: 11
 Explanation: The original array was [11,13,15,17] and it was rotated 4 times. 
 */
 
-int search(vector<int>& nums, int target) {
+int findMin(vector<int>& nums) {
     int n = nums.size();
     int s = 0, e = n-1, mid = (s+e)/2;
     
-    while (s <= e) {
-        if (nums[mid] == target)
-            return mid;
-        if (nums[s] <= nums[mid]) {
-            if (target >= nums[s] && target < nums[mid])
-                e = mid-1;
-            else
-                s = mid+1;
-        } else {
-            if (target <= nums[e] && target > nums[mid])
-                s = mid+1;
-            else
-                e = mid-1;
-        }
+    while(nums[s] > nums[e]){
+        if (nums[s] <=  nums[mid])
+            s = mid+1;
+        else
+            e = mid;
         mid = (s+e)/2;
     }
-    return -1;
+    return nums[s];
 }
