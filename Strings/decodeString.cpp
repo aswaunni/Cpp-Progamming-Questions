@@ -25,32 +25,19 @@ int recur(string s, int i, int n) {
 	return result;
 }
 
-// Method 3 -> Dynamic Programming
+// Method 2 -> Dynamic Programming
 
-int CountWays(string s){
-    if (s[0] == '0')
-        return 0;
-       
-    int n = s.length();
-    int mod = 1e9 + 7;
-    vector<int> dp(n+1);
-    
+int recur(string s, int n) {
+    vector<int> dp(n+1, 0);
     dp[0] = 1;
-    dp[1] = 1;
     
-    for (int i = 2; i <= n; i++) {
-            
-        int c1 = 0, c2 = 0;
-        
-        if (s[i-1] != '0')
-            c1 = dp[i-1];
-        
-        if (s[i-2] == '1' || (s[i-2] == '2' && s[i-1] < '7'))
-            c2 = dp[i-2];
-            
-       dp[i] = (c1 + c2)%mod;
+    for (int i = 0; i < n; i++) {
+        if (s[i] != '0')
+            dp[i+1] += dp[i];
+        if (i > 0 && (s[i-1] == '1' || (s[i-1] == '2' && s[i] < '7')))
+            dp[i+1] += dp[i-1];
     }
-    return dp[n];    
+    return dp[n];
 }
 
 int main()
