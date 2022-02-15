@@ -14,49 +14,17 @@ Given an input stream of A of n characters consisting only of lower case alphabe
  "aabc" - first non-repeating character is 'b'
 */
 
-// { Driver Code Starts
-#include<bits/stdc++.h>
-	using namespace std;
-
-	// } Driver Code Ends
-	class Solution {
-		public:
-			string FirstNonRepeating(string str){
-				queue<char> q;
-				int charCount[26] = { 0 };
-
-
-				for (int i = 0; str[i]; i++) {
-
-					q.push(str[i]);
-					charCount[str[i] - 'a']++;
-
-					while (!q.empty()) {
-						if (charCount[q.front() - 'a'] > 1)
-							q.pop();
-						else {
-							str[i] = q.front();
-							break;
-						}
-					} 
-					if (q.empty())
-						str[i] = '#';
-				}
-				return str;
-			}
-
-	};
-
-// { Driver Code Starts.
-int main(){
-	int tc;
-	cin >> tc;
-	while(tc--){
-		string A;
-		cin >> A;
-		Solution obj;
-		string ans = obj.FirstNonRepeating(A);
-		cout << ans << "\n";
-	}
-	return 0;
-}  // } Driver Code Ends
+string FirstNonRepeating(string a){
+    vector<int> freq(26, 0);
+    queue<char> q;
+    string ans;
+    
+    for (int i = 0; i < a.length(); i++) {
+        q.push(a[i]);
+        freq[a[i] -'a']++;
+        while(!q.empty() && freq[q.front()-'a'] > 1) q.pop();
+        
+        ans += (q.empty() ? '#' : q.front());
+    }
+    return ans;
+}
