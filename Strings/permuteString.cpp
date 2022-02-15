@@ -28,7 +28,7 @@ void permute(string s, int l, int r)
 
 			permute(s, l+1, r);
 
-//			swap(s[l], s[i]);
+			swap(s[l], s[i]);
 		}
 	}
 }
