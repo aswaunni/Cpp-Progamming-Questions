@@ -14,55 +14,6 @@ Given two sorted linked lists consisting of N and M nodes respectively. The task
  10, 15, 20, 40.
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-
-struct node {
-	node* next;
-	int data;
-	node(int d) 
-	{
-		data = d;
-		next = NULL;
-	}
-};
-
-struct linkedList {
-	node* head;
-
-	linkedList()
-	{
-		head = NULL;
-	}
-
-	void push(int d)
-	{
-		node* n = new node(d);
-		n->data = d;
-		n->next = head;
-		head = n;
-	}
-
-	void print()
-	{
-		node* n = head;
-		while(n != NULL) {
-			cout << n->data << " ";
-			n = n->next;
-		}
-		cout << "\n";
-	}
-};
-
-void print(node* n)
-{
-	while(n != NULL) {
-		cout << n->data << " ";
-		n = n->next;
-	}
-	cout << "\n";
-}
-
 node* sortedMerge(node* head1, node* head2)  
 {   
 	node* cur1 = head1, *cur2 = head2;
@@ -88,25 +39,39 @@ node* sortedMerge(node* head1, node* head2)
 	return newHead;
 }
 
-int main() {
-	linkedList l1;
-	l1.push(25);
-	l1.push(12);
-	l1.push(10);
-	l1.push(5);
-	l1.print();
+//OR 
 
-	linkedList l2;
-	l2.push(20);
-	l2.push(10);
-	l2.push(2);
-	l2.print();
+ListNode* mergeTwoLists(ListNode* h1, ListNode* h2) {
+    if (!h1)
+        return h2;
+    if (!h2)
+        return h1;
+    
+    ListNode* head = NULL;
+    if (h1->val < h2->val) {
+        head = h1;
+        h1 = h1->next;
+    } else {
+        head = h2;
+        h2 = h2->next;
+    }
+    
+    ListNode* cur = head;
+    while (h1 && h2) {
+        if (h1->val < h2->val) {
+            cur->next = h1;
+            h1 = h1->next;
+        } else {
+            cur->next = h2;
+            h2 = h2->next;
+        }
+        cur = cur->next;
+    }
+    
+    if (h2)
+        cur->next= h2;
 
-	node* n = sortedMerge(l1.head, l2.head);
-	print(n);
-
-	return 0;
+    if (h1)
+        cur->next = h1;
+    return head;
 }
-
-
-
