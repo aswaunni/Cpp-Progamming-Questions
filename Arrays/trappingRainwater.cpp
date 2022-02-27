@@ -47,4 +47,23 @@ int main() {
 	return 0;
 }
 
+// OR
+
+long long trappingWater(int arr[], int n){
+    vector<int> rMax(n, 0);
+    rMax[n-1] = arr[n-1];
+    
+    for (int i = n-2; i >= 0; i--)
+        rMax[i] = max(rMax[i+1], arr[i]);
+        
+    int lMax = 0;
+    long long ans = 0;
+    for (int i = 0; i < n; i++) {
+        lMax = max(lMax, arr[i]);
+        int x = min(lMax, rMax[i]);
+        if (x > arr[i])
+            ans += (x - arr[i]);
+    }
+    return ans;
+}
 
