@@ -14,12 +14,23 @@ Output:    964176192 (00111001011110000010100101000000)
 Explanation: The input binary string 00000010100101000001111010011100 represents the unsigned integer 43261596, so return 964176192 which its binary representation is 00111001011110000010100101000000.
 */
 
-uint32_t reverseBits(uint32_t n) {
-    uint32_t ans = 0;
-    for (int i = 31; i >= 0; i--) {
-        int x = n&1;
-        ans |= (x << i);
-        n >>= 1;
+long long reversedBits(long long x) {
+    long long ans = 0;
+    int i = 31;
+    while(x) {
+        ans += pow(2, i--) * (x%2);
+        x /= 2;
+    }
+    return ans;
+}
+
+// OR
+
+long long reversedBits(long long x) {
+    long long ans = 0;
+    for (int i = 0; i < 32; i++) {
+        ans = (ans << 1) | (x & 1);
+        x = x >> 1;
     }
     return ans;
 }
