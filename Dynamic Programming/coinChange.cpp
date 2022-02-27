@@ -32,3 +32,19 @@ int coinChange(vector<int>& coins, int amount) {
     }
     return (dp[amount] > amount ? -1 : dp[amount]);
 }
+
+// OR
+
+int minCoins(int coins[], int n, int v) 
+{ 
+    vector<int> dp(v+1, INT_MAX);
+    dp[0] = 0;
+    
+    for (int i = 1; i <= v; i++) {
+        for (int j = 0; j < n; j++) {
+            if (coins[j] <= i && dp[i - coins[j]] != INT_MAX)
+                dp[i] = min(dp[i], 1 + dp[i - coins[j]]);
+        }
+    }
+    return (dp[v] == INT_MAX ? -1 : dp[v]);
+} 
