@@ -1,0 +1,25 @@
+/*
+Write a program to find the transpose of a square matrix of size N*N. Transpose of a matrix is obtained by changing rows to columns and columns to rows.
+
+Example 1:
+
+Input:
+N = 4
+mat[][] = {{1, 1, 1, 1},
+           {2, 2, 2, 2}
+           {3, 3, 3, 3}
+           {4, 4, 4, 4}}
+Output: 
+{{1, 2, 3, 4},  
+ {1, 2, 3, 4}  
+ {1, 2, 3, 4}
+ {1, 2, 3, 4}} 
+ */
+
+void transpose(vector<vector<int> >& matrix, int n)
+{ 
+    for (int i = 0; i < n-1; i++) {
+        for (int j = i+1; j < n; j++)
+            swap(matrix[i][j], matrix[j][i]);
+    } 
+}
