@@ -17,74 +17,17 @@ Output: 7
 Explanation: 
 Middle of linked list is 7.
 
-
-Method 2: 
+Method: 
 Traverse linked list using two pointers. Move one pointer by one and the other pointers by two. When the fast pointer reaches the end slow pointer will reach the middle of the linked list.
 
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-
-struct node {
-	node* next;
-	int data;
-	node(int d) 
-	{
-		data = d;
-		next = NULL;
-	}
-};
-
-struct linkedList {
-	node* head;
-
-	linkedList()
-	{
-		head = NULL;
-	}
-
-	void push(int d)
-	{
-		node* n = new node(d);
-		n->data = d;
-		n->next = head;
-		head = n;
-	}
-
-	void print()
-	{
-		node* n = head;
-		while(n != NULL) {
-			cout << n->data << " ";
-			n = n->next;
-		}
-		cout << "\n";
-	}
-
-	void middle()
-	{
-		node* one = head, *two = head;
-		while(two && two->next) {
-			one = one->next;
-			two = two->next->next;
-		}
-		cout << two->data << "\n";
-	}
-};
-
-int main() {
-	linkedList ll;
-	ll.push(3);
-	ll.push(2);
-	ll.push(1);
-
-	ll.print();
-
-	ll.middle();
-
-	return 0;
+int getMiddle(Node *head)
+{
+    Node* fast = head,*slow =head;
+    while(fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow->data;
 }
-
-
-
