@@ -32,24 +32,18 @@ int maxProfit(vector<int>& prices) {
 
 //OR
 
-vector<vector<int> > stockBuySell(vector<int> A, int n)
-{
+vector<vector<int> > stockBuySell(vector<int> A, int n){
+    int sMin = 0, eMax = 0;
     vector<vector<int>> ans;
     
-    int i = 0;
-    while (A[i+1] <= A[i] && i+1 < n) i++;
-    
-    int j = i;
-    while (j+1 < n) {
-        if (A[j+1] < A[j]) {
-            ans.push_back({i, j});
-            i = j+1;
-        }
-        j++;
-    }
-    if (j > i)
-        ans.push_back({i, j});
+    int i = 1;
+    for (; i < n; i++) {
+        int s = i-1;
+        while (i < n && A[i] >= A[i-1]) i++;
         
+        if (s < i-1)
+            ans.push_back({s, i-1});
+    }
     return ans;
 }
 
