@@ -25,3 +25,46 @@ long long int inversionCount(long long arr[], long long N)
     }
     return ans;
 }
+
+//OR 
+
+    long long merge(long long arr[], int l, int r, int mid)
+    {
+        long long i = l, j = mid+1, cur = 0;
+        long long ans = 0;
+        vector<long long > temp;
+        
+        while (i <= mid && j <= r) {
+            if (arr[i] <= arr[j])
+                temp.push_back(arr[i++]);
+            else {
+                temp.push_back(arr[j++]);
+                ans += mid - i + 1;
+            }
+        }
+        
+        while (i <= mid)
+            temp.push_back(arr[i++]);
+        while (j <= r)
+            temp.push_back(arr[j++]);
+            
+        for(int i = l; i <= r; i++)
+           arr[i] = temp[cur++];
+
+       return ans;
+    }
+
+    long long solve(long long arr[], int l, int r) 
+    {
+        if (l >= r)
+            return 0;
+            
+        int mid = (l + r)/2;
+        return solve(arr, l, mid) + solve(arr, mid+1, r) + merge(arr, l, r, mid);
+
+    }
+
+    long long int inversionCount(long long arr[], long long N)
+    {
+        return solve(arr, 0, N-1);
+    }
