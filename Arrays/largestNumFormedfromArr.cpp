@@ -21,27 +21,18 @@ Explanation: Given numbers are {54, 546,
 gives the largest value.
 */
 
-#include <bits/stdc++.h>
-
-using namespace std;
-
-bool str_compare(string a, string b)
-{
-	string ab = a.append(b);
-	string ba = b.append(a);
-
-	return (ab.compare(ba) > 0 ? 1 : 0);
-}
-
-int main() {
-	int n = 5;
-	string arr[] = {"3", "30", "34", "5", "9"};
-	sort(arr, arr+n, str_compare);
-
-	for (auto& a : arr)
-		cout << a.c_str();
-
-	return 0;
+string largestNumber(vector<int>& nums) {
+    int n = nums.size();
+    
+    sort(nums.begin(), nums.end(), [] (int& a, int& b) {
+        string c = to_string(a), d = to_string(b);
+        return (c+d > d+c); 
+    });
+    
+    string ans;
+    for (auto& a : nums)
+        ans += to_string(a);
+    return (ans[0] == '0' ? "0" : ans);
 }
 
 //OR
