@@ -30,41 +30,43 @@ Expected Auxiliary Space: O(n1 + n2) ; where n1 and n2 are sizes of strings s1 a
 
 */
 
-string multiplyStrings(string s1, string s2) {
-    if (s1 == "0" || s2 == "0")
+string multiplyStrings(string num1, string num2) {
+    if (num1 == "0" || num2 == "0")
         return "0";
         
     bool neg = false;
-    if (s1[0] == '-' && s2[0] != '-') {
+    if (num1[0] == '-' && num2[0] != '-') {
         neg = true;
-        s1[0] = '0';
-    } else if (s1[0] != '-' && s2[0] == '-') {
+        num1[0] = '0';
+    } else if (num1[0] != '-' && num2[0] == '-') {
         neg = true;
-        s2[0] = '0';
-    } else if (s1[0] == '-' && s2[0] == '-') {
-        s1[0] = '0';
-        s2[0] = '0';
+        num2[0] = '0';
+    } else if (num1[0] == '-' && num2[0] == '-') {
+        num1[0] = '0';
+        num2[0] = '0';
     }
     
-    int n1 = s1.length(), n2 = s2.length();
-    vector<int> v(n1+n2, 0);
+    int n = num1.size() + num2.size();
+    string ans(n, '0');
     
-    for (int i  = n1-1; i >= 0; i--) {
-        for (int j = n2-1; j >= 0; j--) {
-            v[i+j+1] += (s1[i] - '0') * (s2[j] - '0');
-            v[i+j] += v[i+j+1]/10;
-            v[i+j+1] %= 10;
+    for (int i = num1.size()-1; i >= 0; --i) {
+        int d1 = num1[i] - '0';
+        for (int j = num2.size()-1; j >= 0; --j) {
+            int d2 = num2[j] - '0';
+            int zeroes = i + j;
+            int pdt = d1 * d2 + (ans[i+j+1] - '0');
+            
+            ans[i+j+1] = pdt%10 + '0';
+            ans[i+j] += pdt/10;
         }
     }
     
-    int i = 0;
-    while (v[i] == 0 && i < v.size()) i++;
+    while (ans.front() == '0')
+        ans.erase(ans.begin());
     
-    string ans;
+    return ans;
+
     if (neg)
         ans += '-';
-        
-    while (i < v.size()) ans += to_string(v[i++]);
-    
     return ans;
 }
