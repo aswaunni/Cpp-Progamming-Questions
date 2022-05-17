@@ -1,6 +1,8 @@
 /*
 -----------------------
 BINARY SEARCH ALGORITHM
+
+Time Complexity -> O(logn)
 ------------------------
 */
 
