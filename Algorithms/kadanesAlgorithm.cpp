@@ -9,3 +9,14 @@ And keep track of maximum sum contiguous segment among all positive segments (ma
 Each time we get a positive sum compare it with max_so_far and update max_so_far if it is greater than max_so_far
 */
 
+long long maxSubarraySum(int arr[], int n){
+        int maxHere = arr[0];
+        int ans = arr[0];
+        
+        for (int i = 1; i < n; i++) {
+            maxHere = max(maxHere+arr[i], arr[i]);
+            ans = max(ans, maxHere);
+        }
+	
+        return ans;
+}
