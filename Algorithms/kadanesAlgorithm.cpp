@@ -20,3 +20,21 @@ long long maxSubarraySum(int arr[], int n){
 	
         return ans;
 }
+
+//OR
+
+int maxSubArraySum(int a[], int n)
+{
+    int ans = INT_MIN, maxHere = 0;
+ 
+    for (int i = 0; i < n; i++)
+    {
+        ans = maxHere + a[i]; 
+	    
+        if (maxHere < 0)
+            maxHere = 0;
+	    
+        ans = max(ans, maxHere);
+    }
+    return ans;
+}
