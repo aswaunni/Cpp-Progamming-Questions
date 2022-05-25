@@ -15,6 +15,20 @@ Input: nums = [0,1,0,1,0,1,99]
 Output: 99
 */
 
+int singleNumber(int arr[], int n) 
+{
+    int ans = 0;
+    for (int i = 0; i < 64; i++) {
+        int sum = 0;
+        for (int j = 0; j < n; j++)
+            sum += ((arr[j] & (1 << i)) != 0);
+        ans = (ans | (sum%3)<<i);
+    }
+    return ans;
+}
+
+//OR
+
 int singleNumber(vector<int>& nums) {
     int one = 0, two = 0, three = 0;
     for (int i = 0; i < nums.size(); ++i) {
