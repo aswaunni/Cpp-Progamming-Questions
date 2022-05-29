@@ -17,27 +17,25 @@ Input: digits = "2"
 Output: ["a","b","c"]
 */
 
-vector<string> ans;
-vector<string> v = {"", "", "abc", "def", "ghi", "jkl",
-    "mno", "pqrs", "tuv", "wxyz"};
+string keypad[] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-void helper(string d, int i, string& s) {
-    if (i == d.size()) {
-        ans.push_back(s);
+void func(string s, string ans, int i) {
+    if (i == s.length()) {
+        cout << ans << endl;
         return;
     }
-    
-    for (auto& c : v[d[i] - '0']) {
-        s.push_back(c);
-        helper(d, i+1, s);
-        s.pop_back();
-    }
+
+    int k = s[i] - '0';
+    for (int j = 0; j < keypad[k].length(); j++)
+        func(s, ans+keypad[k][j], i+1);
 }
 
-vector<string> letterCombinations(string digits) {
-    if (digits == "")
-        return ans;
-    string s = "";
-    helper(digits, 0, s);
-    return ans;
+int main()
+{
+
+    string s;
+    cout << "enter s:";
+    cin >> s;
+    
+    func(s, "", 0);
 }
