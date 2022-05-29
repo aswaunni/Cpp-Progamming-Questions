@@ -9,27 +9,24 @@ Output: 6
 */
 
 #include <bits/stdc++.h>
+
 using namespace std;
 
-
-long long  numberOfPaths(int m, int n)
-{
-	if (m == 1 || n == 1)
-		return 1;
-
-	return numberOfPaths(m-1, n) + numberOfPaths(m, n-1);
+int func(int i, int j, int n) {
+    if (i == n-1 && j == n-1)
+        return 1;
+    if (i >= n || j >= n)
+        return 0;
+        
+    return (func(i, j+1, n) + func(i+1, j, n));
 }
-
 
 int main()
 {
-	int t;
-	cin>>t;
-	while(t--)
-	{
-		int n,m;
-		cin>>m>>n;
-		cout << numberOfPaths(m, n)<<endl;
-	}
-	return 0;
+
+    int n;
+    cout << "enter n:";
+    cin >> n;
+    
+    cout << func(0, 0, n);
 }
