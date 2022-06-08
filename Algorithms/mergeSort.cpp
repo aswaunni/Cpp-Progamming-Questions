@@ -1,5 +1,7 @@
 /*
 MERGE SORT
+
+Time Complexity - O(nlogn)
 */
 
 #include <bits/stdc++.h>
