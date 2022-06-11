@@ -3,62 +3,60 @@
 using namespace std;
 
 
-struct node {
-	int data;
-	node* next;
-	node(int d) 
-	{
-		data = d;
-		next = NULL;
-	}
+class Node {
+public:
+    Node(int i) {
+        data = i;
+        next = NULL;    
+    }
+    Node(int i, Node* n) {
+        data = i;
+        next = n;    
+    }
+    Node* next;
+    int data;
 };
 
-struct linkedList {
-	node* head;
-	linkedList()
-	{
-		head = NULL;
-	}
+void printLL(Node* head) {
+    Node* temp = head;
+    while(temp) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
 
-	void reverse()
-	{
-		node* curr = head, *prev = NULL, *next = NULL;
-		while (curr) {	
-			next = curr->next;
-			curr->next = prev;		
-			prev = curr;
-			curr = next;
-		}
-		head = prev;
-	}
+Node* reverseLL(Node* head) {
+    Node* cur = head, *prev = NULL;
 
-	void push(int d)
-	{
-		node* temp = new node(d);
-		temp->next = head;
-		head = temp;
-	}
+    while(cur) {
+        Node* temp = cur->next;
+        cur->next = prev;
+        prev = cur;
+        cur = temp;
+    }
+    return prev;
+}
 
-	void print()
-	{
-		node* temp = head;
-		while(temp) {
-			cout << temp->data << " ";
-			temp = temp->next;
-		}
-		cout << "\n";
-	}
-};
+Node* reverseLLRecusive(Node* head) {
+    if (head == NULL || (head->next == NULL))
+        return head;
+    Node* newHead = reverseLLRecusive(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return newHead;   
+}
+   
+int main()
+{
+    Node* a = new Node(3);
+    Node* b = new Node(2, a);
+    Node* c = new Node(1, b);
+    Node* head = c;
 
-int main() {
+    printLL(head);
+    head = reverseLLRecusive(head);
+    printLL(head);
 
-	linkedList ll;
-	ll.push(1);
-	ll.push(2);
-	ll.push(3);
-	ll.print();
-	ll.reverse();
-	ll.print();
-
-	return 0;
+    return 0;
 }
