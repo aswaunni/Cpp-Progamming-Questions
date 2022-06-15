@@ -17,28 +17,43 @@ class MyQueue {
   
     public:
         stack<int> stack_newest_on_top, stack_oldest_on_top; 
-        
-        void prepOldStack() {
+         
+        void push(int x) {
+            stack_newest_on_top.push(x);
+        }
+
+        int pop() {
             if (stack_oldest_on_top.empty()) {
                 while (!stack_newest_on_top.empty()) {
                     stack_oldest_on_top.push(stack_newest_on_top.top());
                     stack_newest_on_top.pop();
                 }
             }
+            return stack_oldest_on_top.pop();
         }
-          
+};
+
+//OR
+
+class MyQueue {
+  
+    public:
+        stack<int> s1; 
+               
         void push(int x) {
-            stack_newest_on_top.push(x);
+            s1.push(x);
         }
 
-        void pop() {
-            prepOldStack();
-            stack_oldest_on_top.pop();
-        }
-
-        int front() {
-            prepOldStack();
-            return stack_oldest_on_top.top();
+        int pop() {
+            if (s1.empty())
+                return -1;
+            int x = s1.top();
+            s1.pop();
+            if (s1.empty())
+                return x;
+            int y = pop();
+            s1.push(x);
+            return y;
         }
 };
 
@@ -53,10 +68,8 @@ int main() {
             cin >> x;
             q1.push(x);
         }
-        else if(type == 2) {
-            q1.pop();
-        }
-        else cout << q1.front() << endl;
+        else if(type == 2)
+            cout << q1.pop() << endl;
     }
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
     return 0;
