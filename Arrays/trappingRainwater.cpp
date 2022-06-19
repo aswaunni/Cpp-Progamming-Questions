@@ -11,40 +11,22 @@ Given an array arr[] of N non-negative integers representing the height of block
  10
 */
 
-#include <bits/stdc++.h>
-
-using namespace std;
-
-
-int main() {
-
-	int n = 6;
-	int arr[] = {3,0,0,2,0,4};
-
-	int left_max = 0, right_max = 0;
-	int i = 0, j = n - 1;
-	int result = 0;
-
-	while (i <= j) {
-		if (arr[i] < arr[j]) {
-			if (arr[i] > left_max)
-				left_max = arr[i];
-			else
-				result += left_max - arr[i];
-			i++;
-
-		} else {
-			if (arr[j] > right_max)
-				right_max = arr[j];
-			else
-				result += right_max - arr[j];
-			j--;
-		}
-	}
-
-	cout << result;
-
-	return 0;
+int rainWaterTrapped(vector<int> v) {
+    stack<int> s;
+    int i = 0, ans = 0;
+    
+    while (i < v.size()) {
+        if (s.empty() || v[i] < v[s.top()]) {
+            s.push(i);
+            i++;
+        } else {
+            int t = s.top();
+            s.pop();
+            if (!s.empty())
+                ans += (min(v[i], v[s.top()]) - v[t]) * (i - s.top() - 1);
+        }
+    }
+    return ans;
 }
 
 // OR
