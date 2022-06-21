@@ -1,0 +1,12 @@
+Properties
+----------
+-->  Maximum nodes at level L : 2^L
+-->  Maximum nodes in a tree of height H : 2^(H-1)
+--> For N nodes, minimum possible heights/levels : log2(N+1)
+--> For L nodes, minimum possible heights/levels : log2(N+1) + 1
+
+Traversal
+---------
+-->  Pre order : Root -> Left subtree -> right subtree
+-->  In order : left subtree -> root -> right subtree
+-->  Post order : left subtree -> right subtree -> root
