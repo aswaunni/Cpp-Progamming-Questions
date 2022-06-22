@@ -47,6 +47,8 @@ void postOrder(Node* r) {
 }
 
 void levelOrder(Node* r) {
+    if (r == NULL)
+        return -1;
     queue<Node*> q;
     q.push(r);
     q.push(NULL);
