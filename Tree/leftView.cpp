@@ -38,3 +38,30 @@ vector<int> leftView(Node *root)
 	left(root, 1, v);
 	return v;
 }
+
+// OR
+
+void leftView(Node* r) {
+    if (r == NULL)
+        return;
+        
+    queue<Node*> q;
+    q.push(r);
+    q.push(NULL);
+    cout << q.front()->data << " ";
+
+    while(!q.empty()) {
+        Node* f = q.front();
+        q.pop();
+        
+        if (f != NULL) {
+            if(f->left)
+                q.push(f->left);
+            if(f->right)
+                q.push(f->right);
+        } else if (!q.empty()) {
+            q.push(NULL);
+            cout << q.front()->data << " ";
+        }
+    }
+} 
