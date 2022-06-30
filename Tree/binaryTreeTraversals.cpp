@@ -66,6 +66,35 @@ void levelOrder(Node* r) {
     }
 }
 
+void zigzagTraversal(Node* r) { // left to right on one level and right to lwft on next level
+    if (r == NULL)
+        return;
+        
+    bool leftToRight = true;
+    stack<Node*> sCur, sNext;
+    
+    sCur.push(r);
+    
+    while(!sCur.empty()) {
+        Node* t = sCur.top();
+        sCur.pop();
+        if (t) {
+            cout << t->data << " ";
+            if (leftToRight) {
+                if (t->left) sNext.push(t->left);
+                if (t->right) sNext.push(t->right);
+            } else {
+                if (t->right) sNext.push(t->right);
+                if (t->left) sNext.push(t->left);
+            }
+        }
+        
+        if (sCur.empty()) {
+            leftToRight = !leftToRight;
+            swap(sCur, sNext);
+        }
+    }
+}
 int main()
 {
     Node* root = new Node(1);
@@ -83,5 +112,7 @@ int main()
     postOrder(root);
     cout << endl;
     levelOrder(root);
+    cout << endl;
+    zigzag(root);
     return 0;
 }
