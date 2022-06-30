@@ -14,18 +14,40 @@ Output: 0 (Since 4 is on left side of 3)
 
 */
 
-bool check(Node* root, int max, int min)
-{
-	if (!root)
-		return true;
+#include <bits/stdc++.h>
 
-	if (root->data < min || root->data > max) 
-		return false; 
+using namespace std;
 
-	return check(root->left, root->data-1, min) && check(root->right, max, root->data+1);
+struct Node {
+    Node* left;
+    Node* right;
+    int data;
+    
+    Node(int d) {
+        data = d;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+bool checkIfBST(Node* r, int mn, int mx) {
+    if (r == NULL)
+        return true;
+        
+    if (r->data < mx && r->data > mn)
+        return checkIfBST(r->left, mn, r->data) & checkIfBST(r->right, r->data, mx);
+    return false;
 }
 
-bool isBST(Node* root) 
+int main()
 {
-	return check(root, INT_MAX, INT_MIN);
+    Node* root = new Node(4);
+    root->left = new Node(2);
+    root->right = new Node(7);
+    root->left->left = new Node(1);
+    root->right->left = new Node(3);
+    root->right->right = new Node(8);
+    
+    cout << checkIfBST(root, INT_MIN, INT_MAX) << endl;
+    return 0;
 }
