@@ -34,7 +34,7 @@ Info largestBST(Node* r) {
     
     int sz = li.size+ri.size+1;
     if (li.isBST && ri.isBST && r->data > li.mx && r->data < ri.mn) {
-        return {li.mn, ri.mx, sz, true};
+        return {min(li.mn, r->data), max(ri.mx, r->data), sz, true};
     }
     return {0, 0, max(li.size, ri.size), false};
 }
