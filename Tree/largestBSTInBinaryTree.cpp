@@ -16,8 +16,8 @@ struct Node {
 };
 
 struct Info {
-    int mn;
     int mx;
+    int mn;
     int size;
     bool isBST;
 };
@@ -34,20 +34,16 @@ Info largestBST(Node* r) {
     
     int sz = li.size+ri.size+1;
     if (li.isBST && ri.isBST && r->data > li.mx && r->data < ri.mn) {
-        return {min(li.mn, r->data), max(ri.mx, r->data), sz, true};
+        return {min(li.mn, r->data), max(ri.mx, r->data), sz, true}; // r->data required in case of single child node
     }
     return {0, 0, max(li.size, ri.size), false};
 }
 
 int main()
 {
-    Node* root = new Node(10);
-    root->left = new Node(5);
-    root->right = new Node(12);
-    root->left->left = new Node(2);
-    root->left->right = new Node(9);
-    root->right->left = new Node(11);
-    root->right->right = new Node(13);
+    Node* root = new Node(5);
+    root->left = new Node(3);
+    root->left->right = new Node(4);
     
     cout << largestBST(root).size << endl;
     return 0;
