@@ -29,65 +29,52 @@ Traverse the list again. For every visited node, pop a node from stack and compa
 If all nodes matched, then return true, else false.
 */
 
-#include <bits/stdc++.h>
-using namespace std;
-
-struct node {
-	node* next;
-	int data;
-	node(int d) 
-	{
-		data = d;
-		next = NULL;
-	}
-};
-
-struct linkedList {
-	node* head;
-
-	linkedList()
-	{
-		head = NULL;
-	}
-
-	void push(int d)
-	{
-		node* n = new node(d);
-		n->data = d;
-		n->next = head;
-		head = n;
-	}
-
-	void print()
-	{
-		node* n = head;
-		while(n != NULL) {
-			cout << n->data << " ";
-			n = n->next;
-		}
-		cout << "\n";
-	}
-
-	void middle()
-	{
-		node* one = head, *two = head;
-		while(two && two->next) {
-			one = one->next;
-			two = two->next->next;
-		}
-		cout << two->data << "\n";
-	}
-};
-
-void print(node* n)
-{
-	while(n != NULL) {
-		cout << n->data << " ";
-		n = n->next;
-	}
-	cout << "\n";
+// Using reversal
+bool isPalindrome(ListNode* head) {
+    ListNode* slow = head, *fast = head;
+    
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    ListNode* prev = slow;
+    slow = slow->next;
+    prev->next = NULL;
+    
+    while (slow) {
+        ListNode* temp = slow->next;
+        slow->next = prev;
+        prev = slow;
+        slow = temp;
+    }
+    
+    fast = head, slow = prev;
+    while (slow) {
+        if (fast->val != slow->val)
+            return false;
+        slow = slow->next;
+        fast = fast->next;
+    }
+    return true;
 }
 
+// Using recursion
+bool check(ListNode* &head, ListNode* cur) {
+    if (cur == NULL)
+        return true;
+    if (check(head, cur->next) && head->val == cur->val) {
+        head = head->next;
+        return true;
+    }
+    return false;
+}
+
+bool isPalindrome(ListNode* head) {
+    return check(head, head);
+}
+
+// Using stack
 bool isPalindrome(node *head)
 {
 	stack<int> s;
@@ -108,19 +95,3 @@ bool isPalindrome(node *head)
 	}
 	return true;
 }
-
-int main() {
-	linkedList l1;
-	l1.push(1);
-	l1.push(3);
-	l1.push(6);
-	l1.push(3);
-	l1.push(1);
-	l1.print();
-
-	cout << "Is palindrome : " << isPalindrome(l1.head);
-
-	return 0;
-}
-
-
