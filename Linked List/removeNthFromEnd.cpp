@@ -17,6 +17,30 @@ Output: [1]
 */
 
 ListNode* removeNthFromEnd(ListNode* head, int n) {
+    ListNode* slow = head, *fast = head;
+    
+    for(int i= 0; i < n; i++)
+        fast = fast->next;
+    
+    if (fast == NULL) {
+        ListNode* x = head->next;
+        delete head;
+        return x;
+    }
+    
+    while (fast->next) {
+        fast = fast ->next;
+        slow = slow->next;
+    }
+    ListNode* x = slow->next;
+    slow->next = slow->next->next;
+    delete x;
+    return head;      
+}
+
+// OR
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
     int c = 0;
     ListNode* t = head;
     while(t) {
