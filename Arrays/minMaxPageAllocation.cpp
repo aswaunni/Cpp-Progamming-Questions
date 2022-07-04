@@ -10,36 +10,37 @@ All the books have to be divided among m students consecutively. Allocate the pa
 using namespace std;
 
 bool isFeasible(vector<int> v, int value, int m) {
-    int j = 0;
-    for(int i = 0; i < m; i++) {
-        int x = 0;
-        while ((x+v[j]) <= value && j < v.size())
-            x += v[j++];
+    int sum = 0, count = 1;
+    for(int i = 0; i < v.size(); i++) {
+        if(sum+v[i] > value) {
+            count++;
+            sum = v[i];
+            if (count > m)
+                return false;
+        } else
+            sum += v[i];
     }
-    return (j == v.size());
+    return true;
 }
 
 int pageAllocation(vector<int> v, int m) {
     if (v.size() < m)
         return -1;
     int l = 0, r = accumulate(v.begin(), v.end(), 0);
-    int ans = INT_MAX;
     
-    while (l <= r) {
+    while (l < r) {
         int mid = (l+r)/2;
-        if (isFeasible(v, mid, m)) {
-            r = mid-1;
-            ans = min(ans, mid);
-        } else {
+        if (isFeasible(v, mid, m))
+            r = mid;
+        else
             l = mid+1;
-        }
     }
-    return ans;
+    return l;
 }
 
 int main()
 {
-    vector<int> v = {12, 34, 67, 90, 114};
+    vector<int> v = {12, 34, 67, 90};
     
     cout << pageAllocation(v, 3);
 
