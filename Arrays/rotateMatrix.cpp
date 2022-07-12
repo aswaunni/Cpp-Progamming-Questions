@@ -17,45 +17,15 @@ Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
 Output: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
 */
 
+// (transpose and reflect)
+
 void rotate(vector<vector<int>>& m) {
     int n = m.size();
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++)
+            swap(m[i][j], m[j][i]);
+    }
     
-    for (int i = 0; i < n/2; i++) {
-        for (int j = i; j < n-i-1; j++) {
-            int temp = m[i][j];
-            m[i][j] = m[n - j - 1][i];
-            m[n - j - 1][i] = m[n - i - 1][n - j - 1];
-            m[n - i - 1][n - j - 1] = m[j][n - i - 1];
-            m[j][n - i - 1] = temp;
-        }
-    }
-}
-
-// OR 
-
-void transpose(vector<vector<int>>& matrix) {
-    int n = matrix.size();
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            int tmp = matrix[j][i];
-            matrix[j][i] = matrix[i][j];
-            matrix[i][j] = tmp;
-        }
-    }
-}
-
-void reflect(vector<vector<int>>& matrix) {
-    int n = matrix.size();
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n / 2; j++) {
-            int tmp = matrix[i][j];
-            matrix[i][j] = matrix[i][n - j - 1];
-            matrix[i][n - j - 1] = tmp;
-        }
-    }
-}
-
-void rotate(vector<vector<int>>& m) {
-    transpose(m);
-    reflect(m);
+    for (auto& a : m)
+        reverse(a.begin(), a.end());
 }
