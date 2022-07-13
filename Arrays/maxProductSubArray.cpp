@@ -19,6 +19,11 @@ Output: 0
 Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
 */
 
+
+// First, if there's no zero in the array, then the subarray with maximum product must start with the first element or end with the last element. 
+// And therefore, the maximum product must be some prefix product or suffix product. 
+//So in this solution, we compute the prefix product A and suffix product B, and simply return the maximum of A and B.
+
 int maxProduct(vector<int>& nums) {
     int ans = INT_MIN;
     int n = nums.size();
@@ -35,22 +40,18 @@ int maxProduct(vector<int>& nums) {
     return ans;
 }
 
-//OR
+// OR
 
-int maxProduct(vector<int>& nums) {        
+int maxProduct(vector<int>& nums) {
+    int ans = INT_MIN, l = 0, r = 0;
     int n = nums.size();
     
-    int ans = nums[0];
-    int mx = nums[0];
-    int mn = nums[0];
-    for (int i = 1; i < n; i++) {
-        if (nums[i] < 0)
-            swap(mx, mn);
+    for (int i = 0; i < n; i++) {
+        l = (l ? l : 1) * nums[i];
+        r = (r ? r : 1) * nums[n-1-i];
         
-        mx = max(nums[i], mx*nums[i]);
-        mn = min(nums[i], mn*nums[i]);
-        
-        ans = max(ans, mx);
+        ans = max(ans, max(l, r));
     }
     return ans;
 }
+
