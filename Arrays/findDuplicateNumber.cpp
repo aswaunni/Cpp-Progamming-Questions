@@ -45,6 +45,30 @@ int findDuplicate(vector<int>& nums) {
     return slow;
 }
 
+// OR Binary search
+
+int findDuplicate(vector<int>& nums) {
+    /*Take range from 1 to n and apply binary search and using pigeon hole principle that 
+    if there are n holes and n+1 pigeons, then there would be 2 pigeons in a hole*/
+    
+    int l = 1, r = nums.size()-1;
+    
+    while (l < r) {
+        int mid = (l+r)/2;
+        int cnt = 0;
+        for (auto& a : nums) {
+            if (a <= mid)
+                cnt++;
+        }
+        
+        if (cnt > mid)
+            r = mid;
+        else
+            l = mid+1;
+    }
+    return l;
+}
+
 // OR
 
 int findDuplicate(vector<int>& nums) {
