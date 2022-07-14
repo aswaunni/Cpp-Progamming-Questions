@@ -24,35 +24,36 @@ Since the largest window of s only has one 'a', return empty string.
 */
 
 string minWindow(string s, string t) {
-    if (s.length() < t.length())
-        return "";
+    unordered_map<char, int> m;
+    for (auto& a : t)
+        m[a]++;
     
-    unordered_map<char, int> m, temp;
-    for (auto& a : t) ++m[a];
+    int i = 0, j = 0;
+    int n = s.length();
+    int start = 0, ans = INT_MAX;
+    int count = t.size();
     
-    int l = 0, r = 0;
-    
-    int start = 0, ans = INT_MAX, count = 0;
-    while (r < s.length()) {
-        if (m.count(s[r])) {
-            ++temp[s[r]];
-            if (temp[s[r]] == m[s[r]])
-                ++count;
+    while (j < n) {
+        if (m.count(s[j])) {
+            if (m[s[j]] > 0)
+                count--;
+            m[s[j]]--;
         }
-        ++r;
+        j++;
         
-        while (count == m.size()) {
-            if (ans > (r - l)) {
-                ans = r - l;
-                start = l;
+        while (count == 0) {
+            if (ans > (j-i)) {
+                ans = j-i;
+                start = i;
             }
-            if (m.count(s[l])) {
-                --temp[s[l]];
-                if (temp[s[l]] < m[s[l]])
-                    --count;
+            if (m.count(s[i])) {
+                if (m[s[i]] == 0)
+                    count++;
+                m[s[i]]++;
             }
-            ++l;
+            i++;
         }
     }
     return (ans == INT_MAX ? "" : s.substr(start, ans));
+    
 }
