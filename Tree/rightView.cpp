@@ -1,54 +1,40 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-
-struct Node {
-    Node* left;
-    Node* right;
-    int data;
+vector<int> rightSideView(TreeNode* root) {
+    vector<int> ans;
+    if (root == NULL)
+        return ans;
     
-    Node(int d) {
-        data = d;
-        left = NULL;
-        right = NULL;
+    queue<TreeNode*> q;
+    q.push(root);
+    
+    while (!q.empty()) {
+        int sz = q.size();
+        ans.push_back(q.front()->val);
+        while (sz--) {
+            TreeNode* f = q.front();
+            q.pop();
+            
+            if (f->right) q.push(f->right);
+            if (f->left) q.push(f->left);
+        }
     }
-};
+    return ans;
+}
 
-void rightView(Node* r) {
+// OR (Recursion)
+
+void check(TreeNode* r, vector<int>& ans, int level) {
     if (r == NULL)
         return;
-        
-    queue<Node*> q;
-    q.push(r);
-    q.push(NULL);
-
-    while(!q.empty()) {
-        Node* f = q.front();
-        q.pop();
-        
-        if (f != NULL) {
-            if (q.front() == NULL)
-                cout << f->data << " ";
-                
-            if(f->left)
-                q.push(f->left);
-            if(f->right)
-                q.push(f->right);
-        } else if (!q.empty())
-            q.push(NULL);
-    }
-}  
-
-int main()
-{
-    Node* root = new Node(1);
-    root->left = new Node(2);
-    root->right = new Node(3);
-    root->left->left = new Node(4);
-    root->left->right = new Node(5);
-    root->right->left = new Node(6);
-    root->right->right = new Node(7);
     
-    rightView(root);
-    return 0;
+    if (level == ans.size())
+        ans.push_back(r->val);
+    
+    check(r->right, ans, level+1);
+    check(r->left, ans, level+1);
+}
+
+vector<int> rightSideView(TreeNode* root) {
+    vector<int> ans;
+    check(root, ans, 0);
+    return ans;
 }
