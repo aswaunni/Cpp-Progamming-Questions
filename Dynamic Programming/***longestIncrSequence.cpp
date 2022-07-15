@@ -22,18 +22,32 @@ Output: 1
 */
 
 int lengthOfLIS(vector<int>& nums) {
+    int ans = 0;
+    vector<int> v;
+    for (auto& a : nums) {
+        auto it = lower_bound(v.begin(), v.end(), a);
+        if (it == v.end())
+            v.push_back(a);
+        else
+            *it = a;
+    }
+    return v.size();
+}
+
+// OR
+
+int lengthOfLIS(vector<int>& nums) {
     int n = nums.size();
-    int ans = 1;
-    
     vector<int> dp(n, 1);
+    int ans = 1;
     
     for (int i = 1; i < n; i++) {
         for (int j = 0; j < i; j++) {
-            if (nums[j] < nums[i]) {
-                dp[i] = max(dp[i], dp[j] + 1);
-                ans = max(ans, dp[i]);
-            }
+            if (nums[j] < nums[i])
+                dp[i] = max(dp[i], dp[j]+1);
         }
+        if (ans < dp[i])
+            ans = dp[i];
     }
     return ans;
 }
