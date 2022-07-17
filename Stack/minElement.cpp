@@ -65,3 +65,29 @@ int pop(stack<int>& s){
 int getMin(stack<int>& s){
 	return minS.top();
 }
+
+// OR
+
+void push(int val) {
+    if (val <= mn) {
+        s.push(mn);
+        mn = val;
+    }
+    s.push(val);
+}
+
+void pop() {
+    if (s.top() == mn) {
+        s.pop();
+        mn = s.top();
+    }
+    s.pop();
+}
+
+int top() {
+    return s.top();
+}
+
+int getMin() {
+    return mn;
+}
