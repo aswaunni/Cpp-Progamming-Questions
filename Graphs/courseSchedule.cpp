@@ -22,30 +22,36 @@ Explanation: There are a total of 2 courses to take.
 To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
 */
 
-bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-    int n = numCourses;
+bool cyclic(int i, vector<vector<int>>& m, vector<bool>& vis, vector<bool>& cycleVis) {
+    if (cycleVis[i])
+        return true;
     
-    vector<vector<int>> dependency(n);
-    vector<bool> visited(n, false), curClassVisited(n, false);
+    if (vis[i])
+        return false;
     
-    for (auto& p : prerequisites)
-        dependency[p[0]].push_back(p[1]);
+    vis[i] = true;
+    cycleVis[i] = true;
     
-    for (int i = 0; i < n; i++) {
-        if (!visited[i] && isCyclic(i, dependency, visited, curClassVisited))
-            return false; 
-    }
-    return true;
-}
-
-bool isCyclic(int i, vector<vector<int>>& dependency, vector<bool>& visited, vector<bool>& curClassVisited) {
-    visited[i] = true;
-    curClassVisited[i] = true;
-    
-    for (auto& d : dependency[i]) {
-        if ((!visited[d] && isCyclic(d, dependency, visited, curClassVisited)) ||  curClassVisited[d])
+    for (auto& edge : m[i]) {
+        if (cyclic(edge, m, vis, cycleVis))
             return true;
     }
-    curClassVisited[i] = false; //backtracking
+    
+    cycleVis[i] = false;
     return false;
+}
+
+bool canFinish(int n, vector<vector<int>>& pre) {
+    vector<vector<int>> m(n);
+    for (auto& a : pre)
+        m[a[1]].push_back(a[0]);
+    
+    vector<bool> vis(n, false);
+    vector<bool> cycleVis(n, false);
+    
+    for (int i = 0; i < n; i++ ) {
+        if (!vis[i] && cyclic(i, m, vis, cycleVis))
+            return false;
+    }
+    return true;
 }
