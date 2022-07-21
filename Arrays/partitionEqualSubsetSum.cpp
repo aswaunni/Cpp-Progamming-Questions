@@ -25,10 +25,10 @@ bool canPartition(vector<int>& nums) {
     vector<bool> dp(sum/2, false);
     dp[0] = true;
     
-    for (int i = 1; i <= nums.size(); i++) {
+    for (int i = 0; i < nums.size(); i++) {
         for (int j = sum/2; j > 0; j--) {
-            if (j >= nums[i-1])
-                dp[j] = dp[j] | dp[j - nums[i-1]];
+            if (j >= nums[i])
+                dp[j] = dp[j] | dp[j - nums[i]];
         }
     }
     return dp[sum/2];
