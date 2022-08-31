@@ -29,6 +29,25 @@ int countNodes(Node* r) {
     return 1 + countNodes(r->left) + countNodes(r->right);
 }
 
+// OR (Efficient)
+
+int countNodes(TreeNode* root) {
+    if (!root)
+        return 0;
+    
+    int lh = 1, rh = 1;
+    TreeNode *r = root, *l = root;
+    while (l = l->left)
+        ++lh;
+    while (r = r->right)
+        ++rh;
+    
+    if (lh == rh)
+        return (1 << lh) - 1;
+    
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
 int main()
 {
     Node* root = new Node(1);
