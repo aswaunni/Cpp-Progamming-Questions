@@ -1,72 +1,104 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-
-struct Node {
-    Node* left;
-    Node* right;
-    int data;
+class Solution {
+public:
+    vector<int> ans;
     
-    Node(int d) {
-        data = d;
-        left = NULL;
-        right = NULL;
+    void dfs(TreeNode* root, int k) {
+        if (!root || k < 0)
+            return;
+        
+        if (k == 0) {
+            ans.push_back(root->val);
+            return;
+        }
+        
+        dfs(root->left, k-1);
+        dfs(root->right, k-1);
+    }
+    
+    int find(TreeNode* root, TreeNode* t, int k) {
+        if (root == NULL)
+            return -1;
+        
+        if (root == t) {
+            dfs(root, k);
+            return 0;
+        }
+        
+        int left = find(root->left, t, k);
+        if (left >= 0) {
+            if (left+1 == k)
+                ans.push_back(root->val);
+            else
+                dfs(root->right, k-2-left);
+            return left+1;
+        }
+        
+        int right = find(root->right, t, k);
+        if (right >= 0) {
+            if (right+1 == k)
+                ans.push_back(root->val);
+            else
+                dfs(root->left, k-2-right);
+            return right + 1;
+        }
+        return -1;
+    }
+    
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        find(root, target, k);
+        
+        return ans;
     }
 };
 
-void printSubtreeNodes(Node* r, int k) {
-    if (r == NULL || k < 0)
-        return;
+// OR
+
+class Solution {
+public:
+    unordered_map<TreeNode*, TreeNode*> m;
+    unordered_set<int> vis;
+    vector<int> ans;
+    
+    void find(TreeNode* root) {
+        if (root == NULL)
+            return;
         
-    if (k == 0) {
-        cout << r->data << " ";
-        return;
-    }
-    
-    printSubtreeNodes(r->left, k-1);
-    printSubtreeNodes(r->right, k-1);
-}
-
-int printNodesAtK(Node* r, Node* target, int k) {
-    if (r == NULL)
-        return -1;
+        if (root->left){
+            m[root->left] = root;
+            find(root->left);
+        }
         
-    if (r == target) {
-        printSubtreeNodes(r, k);
-        return 0;
+        if (root->right) {
+            m[root->right] = root;
+            find(root->right);
+        }
     }
     
-    int dl = printNodesAtK(r->left, target, k);
-    if (dl != -1) {
-        if ((dl + 1) == k)
-            cout << r->data << " ";
-        else
-            printSubtreeNodes(r->right, k-dl-2);
-        return 1+dl;
-    }
-
-    int dr = printNodesAtK(r->right, target, k);
-    if (dr != -1) {
-        if ((dr + 1) == k)
-            cout << r->data << " ";
-        else
-            printSubtreeNodes(r->left, k-dr-2);
-        return 1+dr;
+    void dfs(TreeNode* target, int k) {
+        if (!target)
+            return;
+        
+        if (vis.count(target->val))
+            return;
+        
+        vis.insert(target->val);
+        
+        if (k == 0) {
+            ans.push_back(target->val);
+            return;
+        }
+        
+        dfs(target->left, k-1);
+        dfs(target->right, k-1);
+        
+        if (m[target]) 
+            dfs(m[target], k-1);
     }
     
-    return -1;
-}
-
-int main()
-{
-    Node* root = new Node(1);
-    root->left = new Node(2);
-    root->right = new Node(3);
-    root->left->left = new Node(4);
-    root->left->right = new Node(5);
-    root->right->left = new Node(6);
-    root->right->right = new Node(7);
-    
-    printNodesAtK(root, root->left->left, 4);
-    return 0;
-}
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        find(root);
+        dfs(target, k);
+        
+        return ans;
+    }
+};
