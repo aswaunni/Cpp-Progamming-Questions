@@ -74,3 +74,26 @@ public:
         return n;
     }
 };
+
+//OR
+
+unordered_map<Node*, Node*> m;
+
+Node* dfs(Node* node) {
+    if (m.count(node))
+        return m[node];
+    
+    Node* t = new Node(node->val);
+    m[node] = t;
+    
+    for (auto& a : node->neighbors)
+        t->neighbors.push_back(dfs(a));
+
+    return t;        
+}
+
+Node* cloneGraph(Node* node) {
+    if (!node)
+        return NULL;
+    return dfs(node);
+}
