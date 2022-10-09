@@ -64,3 +64,24 @@ int main()
     postOrderPrint(root);
     return 0;
 }
+
+// OR
+
+TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+    unordered_map<int, int> m;
+    for (int i = 0; i < inorder.size(); i++)
+        m[inorder[i]] = i;
+    return helper(postorder.size()-1, 0, inorder.size()-1, inorder, postorder, m);
+}
+
+TreeNode* helper(int idx, int inStart, int inEnd, vector<int>& inorder, vector<int>& postorder, unordered_map<int, int>& m) {
+    if (idx < 0 || inEnd < inStart)
+        return NULL;
+    TreeNode* root = new TreeNode(postorder[idx]);
+
+    int i = m[postorder[idx]];
+    root->right = helper(idx-1, i+1, inEnd, inorder, postorder, m);
+    root->left = helper(idx-inEnd+i-1, inStart, i-1, inorder, postorder, m);
+
+    return root;
+}
