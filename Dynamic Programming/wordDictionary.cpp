@@ -42,3 +42,25 @@ bool wordBreak(string s, vector<string>& wordDict) {
     }
     return dp[0];
 }
+
+// OR (recursion)
+
+bool helper(string A) {
+    if (A.length() == 0)
+        return true;
+    for (int i = 1; i <= A.length(); i++) {
+        if (st.count(A.substr(0, i)) && helper(A.substr(i)))
+            return true;
+    }
+    return false;
+}
+
+int wordBreak(string A, vector<string> &B) {
+
+    for (auto& s : B)
+        st.insert(s);
+    
+    return helper(A);
+}
+
+unordered_set<string> st;
